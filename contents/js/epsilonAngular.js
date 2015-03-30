@@ -29,9 +29,29 @@ app.controller("dragableImages", function ($scope, $rootScope) {
     $scope.img_2 = $scope.images[1];
     $scope.img_3 = $scope.images[2];
     $scope.tempLocation = {};
-    $scope.onDrop = function (data) {
-        var itemDroped = $scope.tempLocation;
+    $scope.lastDroped = null;
+    $scope.onStart = function (item, data) {
 
+    };
+    $scope.onDrop = function (event, data) {
+        var itemDroped = data.draggable[0];
+        var index = $(itemDroped).attr("data-index");
+        if (!index == "" || !index) {
+            index = Number(index);
+            itemDroped = $scope.images[index];
+            var From = itemDroped.currentLocation;
+            var To = $(event.target).attr("ng-model");
+            if (To == "img_1") To = "Location 1"
+            else if (To == "img_2") To = "Location 2"
+            else if (To == "img_3") To = "Location 3"
+            else if (To == "tempLocation") To = "Temp Location"
+            itemDroped.history.push(createImageMovement(From, To));
+            itemDroped.currentLocation = To;
+
+            $(event.target).droppable("disable");
+            $(data.draggable[0]).parent().parent().droppable("enable");
+        }       
+        
     };
 });
 
@@ -43,10 +63,10 @@ function createImageFromRoot(rootImages) {
         image.isImage = true;
         image.scr = rootImages[i].scr;
         image.index = i;
-        image.startLocation = i + 1;
+        image.startLocation = "Location " + (i + 1);
         image.currentLocation = image.startLocation;
         image.history = [];
-        image.history.push(createImageMovement(-1, 1));
+        image.history.push(createImageMovement("", image.currentLocation));
         images.push(image);
     }
     return images;

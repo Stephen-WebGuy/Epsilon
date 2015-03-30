@@ -34,24 +34,30 @@
                 </div>
                 <div id="dragableImages" ng-controller="dragableImages" class="margin-top-10">
                     <div class="row">
-                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_1">
+                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_1" data-jqyoui-options="{disabled:true}">
                             <div class="imageHolder">
-                                <div class="img" ng-model="img_1" data-drag="true" jqyoui-draggable ng-hide="!img_1.isImage">
+                                <div class="img" ng-model="img_1" data-drag="true" jqyoui-draggable ng-hide="!img_1.isImage" data-index="{{img_1.index}}" data-jqyoui-options="{ revert: 'invalid'}">
                                     {{img_1.index}}
+                                    <br />
+                                    {{img_1}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_2">
+                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_2" data-jqyoui-options="{disabled:true}">
                             <div class="imageHolder">
-                                <div class="img" ng-model="img_2" data-drag="true" jqyoui-draggable ng-hide="!img_2.isImage">
+                                <div class="img" ng-model="img_2" data-drag="true" jqyoui-draggable ng-hide="!img_2.isImage" data-index="{{img_2.index}}" data-jqyoui-options="{ revert: 'invalid' }">
                                     {{img_2.index}}
+                                    <br />
+                                    {{img_2}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_3">
+                        <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="img_3" data-jqyoui-options="{disabled:true}">
                             <div class="imageHolder">
-                                <div class="img" ng-model="img_3" data-drag="true" jqyoui-draggable ng-hide="!img_3.isImage">
+                                <div class="img" ng-model="img_3" data-drag="true" jqyoui-draggable ng-hide="!img_3.isImage" data-index="{{img_3.index}}" data-jqyoui-options="{ revert: 'invalid' }">
                                     {{img_3.index}}
+                                    <br />
+                                    {{img_3}}
                                 </div>
                             </div>
                         </div>
@@ -59,8 +65,10 @@
                     <div class="row margin-top-10">
                         <div class="col-md-4" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="tempLocation">
                             <div class="imageHolder">
-                                <div class="img" ng-model="tempLocation" data-drag="true" jqyoui-draggable ng-hide="!tempLocation.isImage">
+                                <div class="img" ng-model="tempLocation" data-drag="true" jqyoui-draggable ng-hide="!tempLocation.isImage" data-index="{{tempLocation.index}}" data-jqyoui-options="{ revert: 'invalid' }">
                                     {{tempLocation.index}}
+                                    <br />
+                                    {{tempLocation}}
                                 </div>
                             </div>
                         </div>
