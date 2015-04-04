@@ -1,0 +1,6 @@
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\bin\Epsilon.dll.config
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\bin\Epsilon.dll
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\bin\Epsilon.pdb
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\obj\Release\Epsilon.csprojResolveAssemblyReference.cache
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\obj\Release\Epsilon.dll
+c:\users\timothy.tpf\documents\visual studio 2013\Projects\Epsilon\Epsilon\obj\Release\Epsilon.pdb

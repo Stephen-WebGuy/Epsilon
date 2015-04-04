@@ -1,0 +1,27 @@
+﻿html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.imageHolder {
+    height: 30vh;
+    width: 30vh;
+    margin-left:auto;
+    margin-right:auto;
+    background: black;
+}
+.imageHolder .img{
+    height:100%;
+    width:100%;
+    background:gray;
+}
+
+
+.margin-top-10{
+    margin-top:10px;
+}

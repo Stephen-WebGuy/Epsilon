@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\timothy.TPF\Documents\GitHub\Epsilon</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Epsilon.dll">
+      <publishTime>03/29/2015 18:00:31</publishTime>
+    </File>
+    <File Include="contents/css/bootstrap.css.map">
+      <publishTime>03/29/2015 15:33:29</publishTime>
+    </File>
+    <File Include="contents/css/bootstrap.min.css">
+      <publishTime>03/29/2015 15:33:29</publishTime>
+    </File>
+    <File Include="contents/css/epsilon.css">
+      <publishTime>03/29/2015 16:56:17</publishTime>
+    </File>
+    <File Include="contents/css/jquery-ui.min.css">
+      <publishTime>03/29/2015 15:35:34</publishTime>
+    </File>
+    <File Include="contents/css/jquery-ui.structure.min.css">
+      <publishTime>03/29/2015 15:35:43</publishTime>
+    </File>
+    <File Include="contents/css/jquery-ui.theme.css">
+      <publishTime>03/29/2015 15:36:19</publishTime>
+    </File>
+    <File Include="contents/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>03/29/2015 15:33:36</publishTime>
+    </File>
+    <File Include="contents/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>03/29/2015 15:33:36</publishTime>
+    </File>
+    <File Include="contents/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>03/29/2015 15:33:36</publishTime>
+    </File>
+    <File Include="contents/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>03/29/2015 15:33:36</publishTime>
+    </File>
+    <File Include="contents/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>03/29/2015 15:33:36</publishTime>
+    </File>
+    <File Include="contents/js/angular-dragdrop.min.js">
+      <publishTime>03/29/2015 15:47:37</publishTime>
+    </File>
+    <File Include="contents/js/angular.min.js">
+      <publishTime>03/29/2015 15:44:01</publishTime>
+    </File>
+    <File Include="contents/js/bootstrap.min.js">
+      <publishTime>03/29/2015 15:33:44</publishTime>
+    </File>
+    <File Include="contents/js/epsilon.js">
+      <publishTime>04/04/2015 13:13:09</publishTime>
+    </File>
+    <File Include="contents/js/epsilonAngular.js">
+      <publishTime>04/04/2015 13:13:07</publishTime>
+    </File>
+    <File Include="contents/js/jquery-2.1.3.min.js">
+      <publishTime>03/29/2015 15:32:55</publishTime>
+    </File>
+    <File Include="contents/js/jquery-ui.min.js">
+      <publishTime>03/29/2015 15:35:50</publishTime>
+    </File>
+    <File Include="index.html">
+      <publishTime>04/04/2015 13:11:37</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>03/29/2015 18:00:31</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
