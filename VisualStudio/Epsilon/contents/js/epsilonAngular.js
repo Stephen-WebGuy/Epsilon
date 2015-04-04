@@ -13,7 +13,7 @@ app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
 
     // This is where image locations and id are located and will be coppeid for use in controllers 
-    $rootScope.rootimages = [{ ID: 1, src: "" }, { ID: 2, src: "" }, { ID: 3, src: "" }];
+    $rootScope.rootimages = [{ ID: 1, src: "contents/images/image1.jpg" }, { ID: 2, src: "contents/images/image2.jpg" }, { ID: 3, src: "contents/images/image3.jpg" }];
 });
 
 app.controller("main", function ($scope, $rootScope) {
@@ -32,7 +32,7 @@ app.controller("staticImages", function ($scope, $rootScope) {
 app.controller("dragableImages", function ($scope, $rootScope) {
     // This is the controller to control the dragable images
     // This is where the images are head. Duplicated from root images.
-    $scope.images = createImageFromRoot($rootScope.rootimages);
+    $scope.images = shuffle(createImageFromRoot($rootScope.rootimages));
     // push another object that is empty for the blank space
     $scope.images.push({});
     // On drop event.
@@ -75,7 +75,7 @@ function createImageFromRoot(rootImages) {
         var image = {};
         image.isImage = true;
         image.ID = rootImages[i].ID
-        image.scr = rootImages[i].scr;
+        image.src = rootImages[i].src;
         image.index = i;
         image.startLocation = i + 1;
         image.currentLocation = image.startLocation;
@@ -92,3 +92,44 @@ function createImageMovement(from, to) {
     item.to = "Location " + to;
     return item
 }
+
+//shuffle elements in an array
+function shuffle(thisArray) {
+    var array = thisArray.clone();
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    if (thisArray.isEqualTo(array))
+        return shuffle(thisArray);
+    return array;
+}
+
+//compare if two arrays are equal
+Array.prototype.isEqualTo = function(arrayB) {
+    var arrayA = this;
+    if (arrayA.length != arrayB.length) { return false; }
+    else {
+        for (i = 0; i < arrayA.length; i++) {
+            if (arrayB[i] != arrayA[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+//clone an array
+Array.prototype.clone = function () {
+    return this.slice(0);
+};

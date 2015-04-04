@@ -27,7 +27,7 @@
                     <div class="row">
                         <div ng-repeat="image in images" class="col-md-4">
                             <div class="imageHolder">
-
+                                <img class="toyImage" ng-src="{{image.src}}" />
                             </div>
                         </div>
                     </div>
@@ -40,15 +40,16 @@
                             <div class="imageHolder" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="image" data-index="{{$index}}" data-jqyoui-options="{disabled:{{image.isImage?true:false}}}">
                                 <!-- this is a element that is dragable. it doesnt show if "image.isImage" doesnt exist -->
                                 <div class="img" ng-model="image" data-drag="true" jqyoui-draggable ng-hide="!image.isImage" data-index="{{image.index}}" data-jqyoui-options="{ revert: 'invalid'}">
-                                    {{image.index}}
+                                    <!--{{image.index}}
                                     <br />
                                     {{image.history}}
-                                    <!-- this is where the image would go:
+                                     this is where the image would go:
                                         it would look something like this
                                         since the "image" object contains an property that is called src
                                         it has been copied from the root images
-                                        <img src="{{image.src}}"/>
+                                    <br />image: {{image.src}}
                                     -->
+                                    <img class="toyImage" ng-src="{{image.src}}" />
                                 </div>
                             </div>
                         </div>
