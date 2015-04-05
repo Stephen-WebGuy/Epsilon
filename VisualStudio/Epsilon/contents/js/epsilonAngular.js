@@ -13,7 +13,11 @@ app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
 
     // This is where image locations and id are located and will be coppeid for use in controllers 
-    $rootScope.rootimages = [{ ID: 1, src: "contents/images/image1.jpg" }, { ID: 2, src: "contents/images/image2.jpg" }, { ID: 3, src: "contents/images/image3.jpg" }];
+    $rootScope.rootimages = [
+        { ID: 1, src: "contents/images/image1.jpg" },
+        { ID: 2, src: "contents/images/image2.jpg" },
+        { ID: 3, src: "contents/images/image3.jpg" }
+    ];
 });
 
 app.controller("main", function ($scope, $rootScope) {
@@ -27,11 +31,18 @@ app.controller("content", function ($scope, $rootScope) {
 app.controller("staticImages", function ($scope, $rootScope) {
     // This is the controler to control the Static Images
     $scope.images = createImageFromRoot($rootScope.rootimages);
-
+    $scope.upDateImageOrder = function () {
+        var order = [];
+        for (var i = 0; i < $scope.images.length; i++) {
+            order.push($scope.images[i].ID);
+        }
+        SetImageOrder(order);
+    }
+    $scope.upDateImageOrder();
 });
-app.controller("dragableImages", function ($scope, $rootScope) {
+app.controller("dragableImages", function ($scope, $rootScope, $filter) {
     // This is the controller to control the dragable images
-    // This is where the images are head. Duplicated from root images.
+    // This is where the images are heald. Duplicated from root images.
     $scope.images = shuffle(createImageFromRoot($rootScope.rootimages));
     // push another object that is empty for the blank space
     $scope.images.push({});
@@ -61,11 +72,46 @@ app.controller("dragableImages", function ($scope, $rootScope) {
             $(event.target).droppable("disable");
             // enable the old dropable location as it is now a vacant spot 
             $(data.draggable[0]).parent().droppable("enable");
+
+            // Check of success every drop end
+            $scope.CheckImageOrder();
         }
 
     };
+
+    $scope.CheckImageOrder = function () {
+        // Makes an array of ids in the images order
+        var order = []
+        for (var i = 0; i < ($scope.images.length - 1) ; i++) {
+            // This finds the image in the position of (i+1) in the image array
+            var image = $filter('filter')($scope.images, { currentLocation: (i + 1) }, true)[0];
+            var ID = image ? image.ID : -1;
+            order.push(ID);
+        }
+        // Check for success by giving this order to check
+        CheckForSuccess(order);
+    }
+
 });
 
+
+var ImageOrder;
+function SetImageOrder(order) {
+    // At the start of the game, set the image order in a array containing the ID's in order of position
+    ImageOrder = order;
+}
+
+function CheckForSuccess(order) {
+    // To check give this function an array containing the order of the curent ID's in there positions
+    // check this order to the order of images that are static
+    if (order.isEqualTo(ImageOrder)) {
+        var Done = function () {
+            alert("Done");
+        }
+        // Put done in a time out because other wise affects the ui animations.
+        setTimeout(Done, 0);        
+    }
+}
 
 function createImageFromRoot(rootImages) {
     // This function coppies config from root images to new local instances of an image.
@@ -110,13 +156,19 @@ function shuffle(thisArray) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
+    // Shuffle again if the same
     if (thisArray.isEqualTo(array))
         return shuffle(thisArray);
+    for (var i = 0; i < array.length; i++) {
+        array[i].index = i;
+        array[i].startLocation = i + 1;
+        array[i].currentLocation = array[i].startLocation;
+    }
     return array;
 }
 
 //compare if two arrays are equal
-Array.prototype.isEqualTo = function(arrayB) {
+Array.prototype.isEqualTo = function (arrayB) {
     var arrayA = this;
     if (arrayA.length != arrayB.length) { return false; }
     else {

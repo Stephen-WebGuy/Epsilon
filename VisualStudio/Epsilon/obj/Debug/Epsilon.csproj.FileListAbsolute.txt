@@ -10,3 +10,9 @@ C:\Users\Juan\Documents\GitHub\Epsilon\VisualStudio\Epsilon\bin\Epsilon.pdb
 C:\Users\Juan\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.dll
 C:\Users\Juan\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.pdb
 C:\Users\Juan\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.csprojResolveAssemblyReference.cache
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\bin\Epsilon.dll.config
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\bin\Epsilon.dll
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\bin\Epsilon.pdb
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.csprojResolveAssemblyReference.cache
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.dll
+C:\Users\timothy.TPF\Documents\GitHub\Epsilon\VisualStudio\Epsilon\obj\Debug\Epsilon.pdb
