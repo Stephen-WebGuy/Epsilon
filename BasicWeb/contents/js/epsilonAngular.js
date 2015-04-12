@@ -14,9 +14,9 @@ app.run(function ($rootScope) {
 
     // This is where image locations and id are located and will be coppeid for use in controllers 
     $rootScope.rootimages = [
-        { ID: 1, name:"", src: "contents/images/image1.jpg" },
-        { ID: 2, name: "", src: "contents/images/image2.jpg" },
-        { ID: 3, name: "", src: "contents/images/image3.jpg" }
+        { ID: 1, name:"", src: "contents/images/image4.jpg" },
+        { ID: 2, name: "", src: "contents/images/image5.jpg" },
+        { ID: 3, name: "", src: "contents/images/image6.jpg" }
     ];
 });
 
