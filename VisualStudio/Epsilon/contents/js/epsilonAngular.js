@@ -134,6 +134,9 @@ function gotToNextLevel(rootScope, scope) {
         scope.l.currentLevel++;
     }
     //$("#content").load(document.URL + ' #content');
+    scope.images = {};
+    scope.images = OrderDraggableImages(rootScope, scope);
+
 }
 
 
