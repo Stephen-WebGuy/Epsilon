@@ -17,7 +17,7 @@
     <script src="contents/js/epsilonAngular.js"></script>
 </head>
 <body ng-app="epsilon" ng-controller="mainController">
-    <div id="titleDiv" ng-repeat="lName in l.levelName | filter:{ID:l.currentLevel}">Level {{lName.name}}</div>
+    <div id="titleDiv">Level {{level.levelName[level.currentLevel-1].name}}</div>
     <div id="mainContainer">
         <div id="nav">
 

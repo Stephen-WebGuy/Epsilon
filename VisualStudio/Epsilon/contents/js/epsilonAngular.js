@@ -21,12 +21,12 @@ app.run(function ($rootScope) {
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
-    $scope.l = {};
-    $scope.l.currentLevel = 1;
-    $scope.l.levelName = [{ ID: 1, name: '1A' },
+    $scope.level = {};
+    $scope.level.currentLevel = 1;
+    $scope.level.levelName = [{ ID: 1, name: '1A' },
                           { ID: 2, name: '1B' },
                           { ID: 3, name: '1C' }];
-    $scope.l.lastLevel = 3;
+    $scope.level.lastLevel = 3;
 });
 
 app.controller("content", function ($scope, $rootScope) {
@@ -45,11 +45,14 @@ app.controller("staticImages", function ($scope, $rootScope) {
     $scope.upDateImageOrder();
 });
 app.controller("dragableImages", function ($scope, $rootScope, $filter) {
-    // This is the controller to control the dragable images
-    // This is where the images are heald. Duplicated from root images.
-    $scope.images = OrderDraggableImages($rootScope, $scope);
-    // push another object that is empty for the blank space
-    $scope.images.push({});
+    // This is the controller to control the dragable images    
+    $scope.OrderImages = function () {
+        // This is where the images are heald. Duplicated from root images.
+        $scope.images = OrderDraggableImages($rootScope, $scope.level);
+        // push another object that is empty for the blank space
+        $scope.images.push({});
+    }
+    $scope.OrderImages();
     // On drop event.
     // Finds the droped image and the target location and logs those details.
     $scope.onDrop = function (event, data) {
@@ -95,7 +98,15 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
         }
         // Check for success by giving this order to check
         if (CheckForSuccess(order)) {
-            gotToNextLevel($rootScope, $scope);
+            // Success
+            if ($scope.level.currentLevel != $scope.level.lastLevel) {
+                // Finsih Level but can increase in a sub level for level A
+                gotToNextLevel($scope.level);
+                $scope.OrderImages(); // Affter increase in level re order the images in the array.
+            } else {
+                // Finished all sub Levels for Level A
+                setTimeout(function () { alert("Finished Level A"); }, 0);
+            }
         }
     }
     $scope.CurentDragImage = { item: null, state: null };
@@ -129,9 +140,9 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 
-function gotToNextLevel(rootScope, scope) {
-    if (scope.l.currentLevel < scope.l.lastLevel) {
-        scope.l.currentLevel++;
+function gotToNextLevel(level) {
+    if (level.currentLevel < level.lastLevel) {
+        level.currentLevel++;
     }
     //$("#content").load(document.URL + ' #content');
 }
@@ -177,11 +188,11 @@ function createImageFromRoot(rootImages) {
 }
 
 //returns an array of images on the order set according to the game-level
-function OrderDraggableImages(rootScope, scope) {
+function OrderDraggableImages(rootScope, level) {
     var order = ImageOrder.clone();
     var temp;
     rootImages = rootScope.rootImages;
-    switch (scope.l.currentLevel) {
+    switch (level.currentLevel) {
         case 1: //level 1A shift images to the left
             temp = order.shift();
             order.push(temp);
