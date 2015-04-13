@@ -16,8 +16,9 @@
     <script src="contents/js/epsilon.js"></script>
     <script src="contents/js/epsilonAngular.js"></script>
 </head>
-<body ng-app="epsilon">
-    <div id="mainContainer" ng-controller="main">
+<body ng-app="epsilon" ng-controller="mainController">
+    <div id="titleDiv" ng-repeat="lName in l.levelName | filter:{ID:l.currentLevel}">Level {{lName.name}}</div>
+    <div id="mainContainer">
         <div id="nav">
 
         </div>
