@@ -6,29 +6,6 @@
 body {
     height: 100%;
     width: 100%;
-    background-color: rgb(0,153,153);
-    /*background-image: url('http://www.funology.com/wp-content/uploads/bgrnd10.png');*/
-}
-
-div, img {
-    border-radius: 10px;
-}
-
-#titleDiv {
-    width: 100%;
-    text-align: center;
-    font-size: 74px;
-    font-family: cursive;
-    color: cornsilk;
-}
-
-#staticImages {
-    border: rgb(0,204,204) solid;
-    margin-bottom: 30px;
-}
-
-#mainContainer {
-    margin-top: 50px;
 }
 
 .imageHolder {
@@ -36,7 +13,7 @@ div, img {
     width: 27vh;
     margin-left:auto;
     margin-right:auto;
-    background: darkslategray;
+    background: black;
 }
 .imageHolder .img {
     height:100%;
