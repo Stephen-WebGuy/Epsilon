@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Epsilon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="contents/css/bootstrap.min.css" rel="stylesheet" />
     <link href="contents/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="contents/css/jquery-ui.structure.min.css" rel="stylesheet" />
@@ -37,20 +38,20 @@
                 <div id="dragableImages" ng-controller="dragableImages" class="margin-top-10">
                     <div class="row">
                         <!-- this is a repated element for each image in images. Note "image" is now an object.  -->
-                        <div class="col-xs-4" ng-repeat="image in images">
+                        <div class="col-xs-4" ng-repeat="image in images" ng-class="{'col-md-offset-4':$last}">
                             <!-- this is an element that is dropable. it is disabled if there is an image in it by default start up-->
-                            <div class="imageHolder" data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="image" data-index="{{$index}}" data-jqyoui-options="{disabled:{{image.isImage?true:false}}}">
+                            <div class="draggable imageHolder"  data-drop="true" jqyoui-droppable="{onDrop:'onDrop'}" ng-model="image" data-index="{{$index}}" data-jqyoui-options="{disabled:{{image.isImage?true:false}}}">
                                 <!-- this is a element that is dragable. it doesnt show if "image.isImage" doesnt exist -->
                                 <div class="img" ng-model="image" data-drag="true" jqyoui-draggable="{onStart:'onStart',onStop:'onStop'}" ng-hide="!image.isImage" data-index="{{image.index}}" data-jqyoui-options="{ revert: 'invalid', containment:'body'}">
                                     <!--{{image.index}}
-        <br />
-        {{image.history}}
-         this is where the image would go:
-            it would look something like this
-            since the "image" object contains an property that is called src
-            it has been copied from the root images
-        <br />image: {{image.src}}
-        -->
+                                    <br />
+                                    {{image.history}}
+                                     this is where the image would go:
+                                        it would look something like this
+                                        since the "image" object contains an property that is called src
+                                        it has been copied from the root images
+                                    <br />image: {{image.src}}
+                                    -->
                                     <img class="toyImage" ng-src="{{image.src}}" />
                                 </div>
                             </div>

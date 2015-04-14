@@ -8,24 +8,25 @@
 
 
 var app = angular.module('epsilon', ['ngDragDrop']);
+var ImageOrder;
 
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
 
     // This is where image locations and id are located and will be coppeid for use in controllers 
     $rootScope.rootImages = [
-        { ID: 1, name:"", src: "contents/images/image4.jpg" },
+        { ID: 1, name: "", src: "contents/images/image4.jpg" },
         { ID: 2, name: "", src: "contents/images/image5.jpg" },
         { ID: 3, name: "", src: "contents/images/image6.jpg" }
     ];
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
-    $scope.level = {};
+    $scope.level = {};//json object to track the levels of the game and the current level
     $scope.level.currentLevel = 1;
     $scope.level.levelName = [{ ID: 1, name: '1A' },
-                          { ID: 2, name: '1B' },
-                          { ID: 3, name: '1C' }];
+                              { ID: 2, name: '1B' },
+                              { ID: 3, name: '1C' }];
     $scope.level.lastLevel = 3;
 });
 
@@ -35,7 +36,7 @@ app.controller("content", function ($scope, $rootScope) {
 app.controller("staticImages", function ($scope, $rootScope) {
     // This is the controler to control the Static Images
     $scope.images = shuffle(createImageFromRoot($rootScope.rootImages));
-    $scope.upDateImageOrder = function () {
+    $scope.upDateImageOrder = function () {//updates the global variable called ImageOrder (contains the order of the static images)
         var order = [];
         for (var i = 0; i < $scope.images.length; i++) {
             order.push($scope.images[i].ID);
@@ -144,11 +145,9 @@ function gotToNextLevel(level) {
     if (level.currentLevel < level.lastLevel) {
         level.currentLevel++;
     }
-    //$("#content").load(document.URL + ' #content');
 }
 
 
-var ImageOrder;
 function SetImageOrder(order) {
     // At the start of the game, set the image order in a array containing the ID's in order of position
     ImageOrder = order;
@@ -208,7 +207,7 @@ function OrderDraggableImages(rootScope, level) {
     var images = [];
     for (var i = 0; i < 3; i++) {
         var image = {};
-        var j = order[i] - 1 ; // some attributes of rootimages[j] are coppied to image[i]
+        var j = order[i] - 1; // some attributes of rootimages[j] are coppied to image[i]
         image.isImage = true;
         image.ID = rootImages[j].ID;
         image.name = rootImages[j].name;
