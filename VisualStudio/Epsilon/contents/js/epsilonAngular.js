@@ -1,4 +1,6 @@
-﻿/// <reference path="bootstrap.min.js" />
+﻿/// <reference path="../../intro-form.html" />
+/// <reference path="../../intro-form.html" />
+/// <reference path="bootstrap.min.js" />
 /// <reference path="jquery-ui.min.js" />
 /// <reference path="angular-dragdrop.min.js" />
 /// <reference path="angular.min.js" />
@@ -147,6 +149,9 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
                 // Finished all sub Levels for Level A
                 $("#modalContent").html("You Have finished level 1");
                 $("#theModal").modal('show');
+                $("#theModal").on('hidden.bs.modal', function () {
+                    window.location.href = "intro-form.html";
+                });
                 //setTimeout(function () { alert("Finished Level A"); }, 0);
             }
         }
