@@ -10,6 +10,40 @@
 var app = angular.module('epsilon', ['ngDragDrop']);
 var ImageOrder;
 
+var session = {
+    ID: '', //number
+    date: '',
+    child: {
+        ID: '', //number
+        age: ''
+    },
+    supervisor: {
+        ID: '' //number
+    },
+    levels: [ //array of levels
+        {
+            ID: '', //example '1', or '2', or '3'
+            sublevels: [ //array of sublevels
+                {
+                    name: '', //example 'A', or 'B', or 'C'
+                    start_time: '', //date
+                    end_time: '', //date
+                    success: false, //whether an image was dropped in a proper container or not.
+                    movements: [// array of movements
+                        {
+                            start_time: '', //when image dragged seconds after sublevel start_time
+                            end_time: '', //when image dropped seconds after sublevel start_time
+                            image_id: '', //number
+                            container_from: '', //number
+                            container_to: '', //number or null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
 
@@ -19,6 +53,7 @@ app.run(function ($rootScope) {
         { ID: 2, name: "", src: "contents/images/image5.jpg" },
         { ID: 3, name: "", src: "contents/images/image6.jpg" }
     ];
+
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
