@@ -9,6 +9,7 @@
 
 var app = angular.module('epsilon', ['ngDragDrop']);
 var ImageOrder;
+var sound1 = new Audio("http://www.freesfx.co.uk/rx2/mp3s/3/4004_1329515672.mp3");
 
 var session = {
     ID: '', //number
@@ -137,11 +138,16 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
             // Success
             if ($scope.level.currentLevel != $scope.level.lastLevel) {
                 // Finsih Level but can increase in a sub level for level A
+                $("#theModal").modal('show');
+                //$("#audio1").play();
+                sound1.play();
                 gotToNextLevel($scope.level);
                 $scope.OrderImages(); // Affter increase in level re order the images in the array.
             } else {
                 // Finished all sub Levels for Level A
-                setTimeout(function () { alert("Finished Level A"); }, 0);
+                $("#modalContent").html("You Have finished level 1");
+                $("#theModal").modal('show');
+                //setTimeout(function () { alert("Finished Level A"); }, 0);
             }
         }
     }
