@@ -80,6 +80,9 @@
     <Content Include="contents\images\image1.jpg" />
     <Content Include="contents\images\image2.jpg" />
     <Content Include="contents\images\image3.jpg" />
+    <Content Include="contents\images\image4.jpg" />
+    <Content Include="contents\images\image5.jpg" />
+    <Content Include="contents\images\image6.jpg" />
     <Content Include="contents\js\angular-dragdrop.min.js" />
     <Content Include="contents\js\angular.min.js" />
     <Content Include="contents\js\bootstrap.min.js" />
@@ -91,6 +94,7 @@
     <Content Include="level1.html" />
     <Content Include="intro-form.html" />
     <Content Include="Level2.html" />
+    <Content Include="NewForm.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
