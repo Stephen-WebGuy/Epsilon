@@ -16,7 +16,7 @@
     <script src="contents/js/angular.min.js"></script>
     <script src="contents/js/angular-dragdrop.min.js"></script>
     <script src="contents/js/epsilon.js"></script>
-    <script src="contents/js/epsilonAngular.js"></script>
+    <script src="contents/js/level1.js"></script>
 </head>
 <body ng-app="epsilon" ng-controller="mainController">
     <div id="titleDiv">Level {{level.levelName[level.currentLevel-1].name}}</div>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="dragableImages" ng-controller="dragableImages" class="margin-top-10">
+                <div id="dragableImages" ng-controller="dragableImages">
                     <div class="row">
                         <!-- this is a repated element for each image in images. Note "image" is now an object.  -->
                         <div class="col-xs-4" ng-repeat="image in images" ng-class="{'col-md-offset-4':$last}">
