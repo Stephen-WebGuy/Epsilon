@@ -3,12 +3,88 @@
 /// <reference path="angular-dragdrop.min.js" />
 /// <reference path="angular.min.js" />
 /// <reference path="jquery-2.1.3.min.js" />
+/// <reference path="epsilon.js" />
 
 // This is where angular functions and dependent functions should go unless common.
+var SubLevel = null;
+var StartTime = null;
+var EndTime = null;
 
+$(document).ready(function () {
+    if (session.Load()) {
+        var SubLevelName = GetURLSubLevelData();
+        SetUPSubLevle(SubLevelName);
+    } else {
+        //Problem No Current Session
+    }    
+});
+
+function GetURLSubLevelData() {
+    var urldata = parseURLParams(window.location.href);
+    var SubLevel = urldata["sublevel"][0];
+    return SubLevel;
+}
+
+var DisplaySubLevel = null;
+
+function SetUPSubLevle(Name) {
+    Name = String(Name).toUpperCase();
+    SubLevel = session.CreateSubLevel(Name);
+    DisplaySubLevel(Name);
+}
+
+function SaveSubLevel(Success) {
+    // Add SubLevel with all movemments to Session
+    session.SetSubLevelDetails(SubLevel, StartTime, EndTime, Success);
+    session.AddSubLevel(SubLevel, 1);
+    session.Save();
+    // Now Go Back to Home
+    setTimeout(function () {
+        alert("Well Done on Finishing The Level");
+        window.location = "/index.html";
+    }, 0);    
+}
+
+function addMovement(StartTime, ImageID, From, Too) {
+    session.AddMovement(SubLevel, session.CreateMovement(StartTime, (new Date()), ImageID, From, Too));
+}
 
 var app = angular.module('epsilon', ['ngDragDrop']);
 var ImageOrder;
+
+var session1 = {
+    ID: '', //number
+    date: '',
+    child: {
+        ID: '', //number
+        age: ''
+    },
+    supervisor: {
+        ID: '' //number
+    },
+    levels: [ //array of levels
+        {
+            ID: '', //example '1', or '2', or '3'
+            sublevels: [ //array of sublevels
+                {
+                    name: '', //example 'A', or 'B', or 'C'
+                    start_time: '', //date
+                    end_time: '', //date
+                    success: false, //whether an image was dropped in a proper container or not.
+                    movements: [// array of movements
+                        {
+                            start_time: '', //when image dragged seconds after sublevel start_time
+                            end_time: '', //when image dropped seconds after sublevel start_time
+                            image_id: '', //number
+                            container_from: '', //number
+                            container_to: '', //number or null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
 
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
@@ -19,6 +95,7 @@ app.run(function ($rootScope) {
         { ID: 2, name: "", src: "contents/images/image5.jpg" },
         { ID: 3, name: "", src: "contents/images/image6.jpg" }
     ];
+
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
@@ -46,7 +123,14 @@ app.controller("staticImages", function ($scope, $rootScope) {
     $scope.upDateImageOrder();
 });
 app.controller("dragableImages", function ($scope, $rootScope, $filter) {
-    // This is the controller to control the dragable images    
+    // This is the controller to control the dragable images   
+    DisplaySubLevel = function (Name) {
+        if (Name == "A") $scope.level.currentLevel = 1;
+        else if (Name == "B") $scope.level.currentLevel = 2;
+        else if (Name == "C") $scope.level.currentLevel = 3;
+        $scope.OrderImages();
+        $scope.$apply();
+    };
     $scope.OrderImages = function () {
         // This is where the images are heald. Duplicated from root images.
         $scope.images = OrderDraggableImages($rootScope, $scope.level);
@@ -72,7 +156,7 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
             var To = Number($(event.target).attr("data-index")) + 1;
 
             // create history object and add to images history array
-            itemDroped.history.push(createImageMovement(From, To));
+            addMovement($scope.CurentDragImage.Time, itemDroped.ID, From, To);
             // update the current location to new location
             itemDroped.currentLocation = To;
             // update the currnte image state to droped (1)
@@ -100,14 +184,18 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
         // Check for success by giving this order to check
         if (CheckForSuccess(order)) {
             // Success
-            if ($scope.level.currentLevel != $scope.level.lastLevel) {
-                // Finsih Level but can increase in a sub level for level A
-                gotToNextLevel($scope.level);
-                $scope.OrderImages(); // Affter increase in level re order the images in the array.
-            } else {
-                // Finished all sub Levels for Level A
-                setTimeout(function () { alert("Finished Level A"); }, 0);
-            }
+
+            EndTime = new Date() // set the end time of level now;
+            SaveSubLevel(true);
+
+            //if ($scope.level.currentLevel != $scope.level.lastLevel) {
+            //    // Finsih Level but can increase in a sub level for level A
+            //    gotToNextLevel($scope.level);
+            //    $scope.OrderImages(); // Affter increase in level re order the images in the array.
+            //} else {
+            //    // Finished all sub Levels for Level A
+            //    setTimeout(function () { alert("Finished Level A"); }, 0);
+            //}
         }
     }
     $scope.CurentDragImage = { item: null, state: null };
@@ -119,10 +207,14 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
         // get the index of the image that is being draged
         var index = $(itemDrag).attr("data-index");
         if (!index == "" || !index) {
+
+            if (StartTime == null) StartTime = new Date(); // Set the Start Time of Level with First Move
+
             index = Number(index);
             itemDrag = $scope.images[index];
             $scope.CurentDragImage.item = itemDrag;
             $scope.CurentDragImage.state = 0;
+            $scope.CurentDragImage.Time = new Date();
         }
     }
     $scope.onStop = function (event, data) {
@@ -130,7 +222,7 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
         // Add a history item to log fail drop
         $scope.FailDropTimer = setTimeout(function () {
             if ($scope.CurentDragImage.state == 0) {
-                $scope.CurentDragImage.item.history.push(createImageFailMovement());
+                addMovement($scope.CurentDragImage.Time, $scope.CurentDragImage.item.ID, $scope.CurentDragImage.item.currentLocation, $scope.CurentDragImage.item.currentLocation);
             }
         }, 10);
     }
