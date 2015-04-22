@@ -13,7 +13,7 @@ var ImageOrder;
 var Sublevels = ["A", "B", "C"]; //sublevels for level 1 (3 sublevels)
 var sound1 = new Audio("http://www.freesfx.co.uk/rx2/mp3s/3/4004_1329515672.mp3");
 var app = angular.module('epsilon', ['ngDragDrop']);
-var randomMessages = ["WOW! You are the best player ever", "Keep it up, I'm proud of you", "You deserve a candy, go ask your mam for one", "Determination is the key to success, Good work!", "Keep up the good work", "I’m impressed of your intelligence", "That deserves an ice-cream"];
+var randomMessages = ["WOW! You are the best player ever", "Keep it up, I'm proud of you", "You deserve a candy, go ask your mum for one", "Determination is the key to success, Good work!", "Keep up the good work", "I’m impressed of your intelligence", "That deserves an ice-cream"];
 
 
 $(document).ready(function () {
@@ -236,7 +236,7 @@ function gotToNextLevel() {
         $("#modalContent").html("You Have finished level 1");
         $("#theModal").modal('show');
         $("#theModal").on('hidden.bs.modal', function () {
-            window.location = "/index.html";
+            window.location = "/results.html";
         });
     }
 }
