@@ -6,7 +6,8 @@ function Session() {
     this.Session = null;
     this.StroageName = "Session";
     this.SessionExists = function(){
-        if(db.getItem(this.StroageName) == null || db.getItem(this.StroageName) == undefined){
+
+        if (db.getItem(this.StroageName) == null || db.getItem(this.StroageName) == undefined) {
             return false;
         }
         return true;
@@ -127,7 +128,6 @@ function Session() {
         Movement.Too = Too;
         return Movement;
     };
-
 }
 
 function getLocalStorage() {
