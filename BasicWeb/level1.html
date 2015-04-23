@@ -23,11 +23,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-header-success">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-thumbs-up"></i> Congratulations!</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-center" id="myModalLabel"><i class="glyphicon glyphicon-thumbs-up"></i> Congratulations!</h4>
                 </div>
                 <div class="modal-body text-center">
-                    <h3 id="modalContent">You have passed to level {{level.levelName[level.currentLevel-1].name}}</h3>
+                    <h3 id="modalContent">level {{level}} completed</h3>
+                    <p>{{randomMessage}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -35,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div id="titleDiv">Level {{level.levelName[level.currentLevel-1].name}}</div>
+    <div id="titleDiv">Level {{level}}</div>
     <div id="mainContainer">
         <div id="nav">
 
