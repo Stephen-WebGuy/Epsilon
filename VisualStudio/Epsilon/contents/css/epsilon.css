@@ -12,6 +12,11 @@ body {
     background-size:100%;
 }
 
+body.databody {
+    background-image:none;
+    background-color:white;
+}
+
 div, img {
     border-radius: 10px;
 }

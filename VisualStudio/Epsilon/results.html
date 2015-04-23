@@ -14,9 +14,52 @@
     <script src="contents/js/bootstrap.min.js"></script>
     <script src="contents/js/angular.min.js"></script>
     <script src="contents/js/epsilon.js"></script>
-    <script src="results.js"></script>
+    <script src="contents/js/results.js"></script>
 </head>
-<body ng-app="results" ng-controller="main-controller">
-    <h1>test: {{theTest}}</h1>
+<body ng-app="results" ng-controller="mainController" class="databody">
+    <div class="container">
+        <div>
+            <h1>Data recorded in this session</h1>
+            <h3>Session:</h3>
+            <ul>
+                <li>ID: {{session.ID}}</li>
+                <li>Date: {{session.Date}}</li>
+                <li>Child ID: {{session.Child.ID}}</li>
+                <li>Child Age: {{session.Child.Date}}</li>
+            </ul>
+        </div>
+        <div ng-repeat="level in session.Levels">
+            <div ng-repeat="sublevel in level.SubLevels">
+                <h3>{{level.Name}} {{sublevel.Name}}</h3>
+                <ul>
+                    <li>Start Time: {{sublevel.StartTime}}</li>
+                    <li>End Time: {{sublevel.EndTime}}</li>
+                    <li>Success: <span ng-if="sublevel.Success">Yes</span> <span ng-if="!sublevel.Success">No</span></li>
+                </ul>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image ID</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Start</th>
+                            <th>End</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="movement in sublevel.Movements">
+                            <td>{{$index}}</td>
+                            <td>{{movement.ImageID}}</td>
+                            <td>{{movement.From}}</td>
+                            <td>{{movement.Too}}</td>
+                            <td>{{movement.StartTime}}</td>
+                            <td>{{movement.EndTime}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

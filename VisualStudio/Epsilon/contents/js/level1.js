@@ -42,51 +42,12 @@ function SaveSubLevel(Success) {
     // Add SubLevel with all movemments to Session
     session.SetSubLevelDetails(SubLevel, StartTime, EndTime, Success);
     session.AddSubLevel(SubLevel, 1);
-    session.Save();
-    // Now Go Back to Home
-    //setTimeout(function () {
-    //    alert("Well Done on Finishing The Level");
-    //    window.location = "/index.html";
-    //}, 0);    
+    session.Save();   
 }
 
 function addMovement(StartTime, ImageID, From, Too) {
     session.AddMovement(SubLevel, session.CreateMovement(StartTime, (new Date()), ImageID, From, Too));
 }
-
-var session1 = {
-    ID: '', //number
-    date: '',
-    child: {
-        ID: '', //number
-        age: ''
-    },
-    supervisor: {
-        ID: '' //number
-    },
-    levels: [ //array of levels
-        {
-            ID: '', //example '1', or '2', or '3'
-            sublevels: [ //array of sublevels
-                {
-                    name: '', //example 'A', or 'B', or 'C'
-                    start_time: '', //date
-                    end_time: '', //date
-                    success: false, //whether an image was dropped in a proper container or not.
-                    movements: [// array of movements
-                        {
-                            start_time: '', //when image dragged seconds after sublevel start_time
-                            end_time: '', //when image dropped seconds after sublevel start_time
-                            image_id: '', //number
-                            container_from: '', //number
-                            container_to: '', //number or null
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
 
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
@@ -236,7 +197,7 @@ function gotToNextLevel() {
         $("#modalContent").html("You Have finished level 1");
         $("#theModal").modal('show');
         $("#theModal").on('hidden.bs.modal', function () {
-            window.location = "/results.html";
+          window.location = "/results.html";
         });
     }
 }
@@ -251,27 +212,19 @@ function getSublevelNumber() {
     else return 0;
 }
 
-function SetImageOrder(order) {
-    // At the start of the game, set the image order in a array containing the ID's in order of position
+function SetImageOrder(order) { // At the start of the game, set the image order in a array containing the ID's in order of position
     ImageOrder = order;
 }
 
-function CheckForSuccess(order) {
-    // To check give this function an array containing the order of the curent ID's in there positions
+function CheckForSuccess(order) {// To check give this function an array containing the order of the curent ID's in there positions
     // check this order to the order of images that are static
     if (order.isEqualTo(ImageOrder)) {
-        /*var Done = function () {
-            alert("Done");
-        }
-        // Put done in a time out because other wise affects the ui animations.
-        setTimeout(Done, 0);*/
         return true;
     }
     return false;
 }
 
-function createImageFromRoot(rootImages) {
-    // This function coppies config from root images to new local instances of an image.
+function createImageFromRoot(rootImages) { // This function coppies config from root images to new local instances of an image.
     // Also add other parameters to this local image.
     var images = [];
     for (var i = 0; i < 3; i++) {
