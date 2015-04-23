@@ -53,12 +53,14 @@ div, img {
     text-align: center;
     font-size: 37px;
     font-family: cursive;
-    color: cornsilk;
-    hover: cornsilk;
+    color: cornflowerblue;
    
 }
 
-
+a:link {color: #b2ad9a; font-weight: bold;}
+a:active {color: #b2ad9a; font-weight: bold;}
+a:visited {color: #b2ad9a; font-weight: bold;}
+a:hover {color: #0000ff; font-weight: bolder;}
 
 #mainContainer {
     margin-top: 50px;
