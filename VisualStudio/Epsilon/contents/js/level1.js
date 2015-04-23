@@ -9,11 +9,18 @@
 var SubLevel = null;
 var StartTime = null;
 var EndTime = null;
+var ImageOrder;
+var Sublevels = ["A", "B", "C"]; //sublevels for level 1 (3 sublevels)
+var sound1 = new Audio("http://www.freesfx.co.uk/rx2/mp3s/3/4004_1329515672.mp3");
+var app = angular.module('epsilon', ['ngDragDrop']);
+var randomMessages = ["WOW! You are the best player ever", "Keep it up, I'm proud of you", "You deserve a candy, go ask your mum for one", "Determination is the key to success, Good work!", "Keep up the good work", "I’m impressed of your intelligence", "That deserves an ice-cream"];
+
 
 $(document).ready(function () {
     if (session.Load()) {
         var SubLevelName = GetURLSubLevelData();
-        SetUPSubLevle(SubLevelName);
+        SetUPSubLevel(SubLevelName);
+        SetTitle();
     } else {
         //Problem No Current Session
     }    
@@ -25,66 +32,22 @@ function GetURLSubLevelData() {
     return SubLevel;
 }
 
-var DisplaySubLevel = null;
-
-function SetUPSubLevle(Name) {
+function SetUPSubLevel(Name) {
     Name = String(Name).toUpperCase();
     SubLevel = session.CreateSubLevel(Name);
-    DisplaySubLevel(Name);
+    DisplaySubLevel();
 }
 
 function SaveSubLevel(Success) {
     // Add SubLevel with all movemments to Session
     session.SetSubLevelDetails(SubLevel, StartTime, EndTime, Success);
     session.AddSubLevel(SubLevel, 1);
-    session.Save();
-    // Now Go Back to Home
-    setTimeout(function () {
-        alert("Well Done on Finishing The Level");
-        window.location = "/index.html";
-    }, 0);    
+    session.Save();   
 }
 
 function addMovement(StartTime, ImageID, From, Too) {
     session.AddMovement(SubLevel, session.CreateMovement(StartTime, (new Date()), ImageID, From, Too));
 }
-
-var app = angular.module('epsilon', ['ngDragDrop']);
-var ImageOrder;
-
-var session1 = {
-    ID: '', //number
-    date: '',
-    child: {
-        ID: '', //number
-        age: ''
-    },
-    supervisor: {
-        ID: '' //number
-    },
-    levels: [ //array of levels
-        {
-            ID: '', //example '1', or '2', or '3'
-            sublevels: [ //array of sublevels
-                {
-                    name: '', //example 'A', or 'B', or 'C'
-                    start_time: '', //date
-                    end_time: '', //date
-                    success: false, //whether an image was dropped in a proper container or not.
-                    movements: [// array of movements
-                        {
-                            start_time: '', //when image dragged seconds after sublevel start_time
-                            end_time: '', //when image dropped seconds after sublevel start_time
-                            image_id: '', //number
-                            container_from: '', //number
-                            container_to: '', //number or null
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
 
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
@@ -99,12 +62,11 @@ app.run(function ($rootScope) {
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
-    $scope.level = {};//json object to track the levels of the game and the current level
-    $scope.level.currentLevel = 1;
-    $scope.level.levelName = [{ ID: 1, name: '1A' },
-                              { ID: 2, name: '1B' },
-                              { ID: 3, name: '1C' }];
-    $scope.level.lastLevel = 3;
+    SetTitle = function() {
+        $scope.level = "1" + SubLevel.Name.toString().toUpperCase();
+        $scope.randomMessage = randomMessages[Math.floor(Math.random() * randomMessages.length)];
+        $scope.$apply();
+    }
 });
 
 app.controller("content", function ($scope, $rootScope) {
@@ -124,16 +86,13 @@ app.controller("staticImages", function ($scope, $rootScope) {
 });
 app.controller("dragableImages", function ($scope, $rootScope, $filter) {
     // This is the controller to control the dragable images   
-    DisplaySubLevel = function (Name) {
-        if (Name == "A") $scope.level.currentLevel = 1;
-        else if (Name == "B") $scope.level.currentLevel = 2;
-        else if (Name == "C") $scope.level.currentLevel = 3;
+    DisplaySubLevel = function () {
         $scope.OrderImages();
         $scope.$apply();
     };
     $scope.OrderImages = function () {
         // This is where the images are heald. Duplicated from root images.
-        $scope.images = OrderDraggableImages($rootScope, $scope.level);
+        $scope.images = OrderDraggableImages($rootScope);
         // push another object that is empty for the blank space
         $scope.images.push({});
     }
@@ -187,15 +146,7 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
 
             EndTime = new Date() // set the end time of level now;
             SaveSubLevel(true);
-
-            //if ($scope.level.currentLevel != $scope.level.lastLevel) {
-            //    // Finsih Level but can increase in a sub level for level A
-            //    gotToNextLevel($scope.level);
-            //    $scope.OrderImages(); // Affter increase in level re order the images in the array.
-            //} else {
-            //    // Finished all sub Levels for Level A
-            //    setTimeout(function () { alert("Finished Level A"); }, 0);
-            //}
+            gotToNextLevel();
         }
     }
     $scope.CurentDragImage = { item: null, state: null };
@@ -233,34 +184,47 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 
-function gotToNextLevel(level) {
-    if (level.currentLevel < level.lastLevel) {
-        level.currentLevel++;
+
+function gotToNextLevel() {
+    var subLNumber = getSublevelNumber();
+    if (subLNumber < Sublevels.length - 1) {
+        sound1.play();
+        $("#theModal").modal('show');
+        $("#theModal").on('hidden.bs.modal', function () {
+            window.location = "level1.html?sublevel=" + Sublevels[subLNumber + 1];
+        });
+    } else {
+        $("#modalContent").html("You Have finished level 1");
+        $("#theModal").modal('show');
+        $("#theModal").on('hidden.bs.modal', function () {
+          window.location = "/results.html";
+        });
     }
 }
 
+//returns 0 if Sublevel is 'a' or 'A', 1 if 'b' or 'B', 2 if 'c' or 'C'
+function getSublevelNumber() {
+    if (SubLevel) {
+        if (String(SubLevel.Name).toUpperCase() == "A") return 0;
+        if (String(SubLevel.Name).toUpperCase() == "B") return 1;
+        if (String(SubLevel.Name).toUpperCase() == "C") return 2;
+    }
+    else return 0;
+}
 
-function SetImageOrder(order) {
-    // At the start of the game, set the image order in a array containing the ID's in order of position
+function SetImageOrder(order) { // At the start of the game, set the image order in a array containing the ID's in order of position
     ImageOrder = order;
 }
 
-function CheckForSuccess(order) {
-    // To check give this function an array containing the order of the curent ID's in there positions
+function CheckForSuccess(order) {// To check give this function an array containing the order of the curent ID's in there positions
     // check this order to the order of images that are static
     if (order.isEqualTo(ImageOrder)) {
-        /*var Done = function () {
-            alert("Done");
-        }
-        // Put done in a time out because other wise affects the ui animations.
-        setTimeout(Done, 0);*/
         return true;
     }
     return false;
 }
 
-function createImageFromRoot(rootImages) {
-    // This function coppies config from root images to new local instances of an image.
+function createImageFromRoot(rootImages) { // This function coppies config from root images to new local instances of an image.
     // Also add other parameters to this local image.
     var images = [];
     for (var i = 0; i < 3; i++) {
@@ -279,21 +243,23 @@ function createImageFromRoot(rootImages) {
 }
 
 //returns an array of images on the order set according to the game-level
-function OrderDraggableImages(rootScope, level) {
+function OrderDraggableImages(rootScope) {
     var order = ImageOrder.clone();
     var temp;
     rootImages = rootScope.rootImages;
-    switch (level.currentLevel) {
-        case 1: //level 1A shift images to the left
-            temp = order.shift();
-            order.push(temp);
-            break;
-        case 2://level 1B shift images to the right
-            temp = order.pop();
-            order.unshift(temp);
-            break;
-        default://level 1C reverse order
-            order.reverse();
+    if (SubLevel) {
+        switch (String(SubLevel.Name).toUpperCase()) {
+            case "A": //level 1A shift images to the left
+                temp = order.shift();
+                order.push(temp);
+                break;
+            case "B": //level 1B shift images to the right
+                temp = order.pop();
+                order.unshift(temp);
+                break;
+            default://level 1C reverse order
+                order.reverse();
+        }
     }
     //create array of images on the specified order
     var images = [];
