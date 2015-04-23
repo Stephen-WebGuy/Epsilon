@@ -3,21 +3,14 @@
 <head>
     <title></title>
     <link href="contents/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="contents/css/jquery-ui.min.css" rel="stylesheet" />
-    <link href="contents/css/jquery-ui.structure.min.css" rel="stylesheet" />
-    <link href="contents/css/jquery-ui.theme.css" rel="stylesheet" />
     <link href="contents/css/epsilon.css" rel="stylesheet" />
 
     <script src="contents/js/jquery-2.1.3.min.js"></script>
-    <script src="contents/js/jquery-ui.min.js"></script>
-    <script src="contents/js/jquery.ui.touch-punch.min.js"></script>
     <script src="contents/js/bootstrap.min.js"></script>
     <script src="contents/js/angular.min.js"></script>
-    <script src="contents/js/angular-dragdrop.min.js"></script>
     <script src="contents/js/epsilon.js"></script>
-    <script src="contents/js/level1.js"></script>
 
-   
+
 </head>
 <body>
     <div id="titleDiv">
@@ -25,15 +18,31 @@
     </div>
     <div id="nav">
         <dl>
-            <dt> <a href="NewForm.html"> Form</a> </dt>
-            <dt> <a href="level1.html?sublevel=a"> Level 1A</a> </dt>
-            <dt> <a href="level1.html?sublevel=b"> Level 1B</a> </dt>
-            <dt> <a href="level1.html?sublevel=c"> Level 1C</a> </dt>
-            <dt> Level 2 - TBA </dt>
-            <dt> Level 2b - TBA</dt>
-            <dt> Level 3 - TBA </dt>
+            <dt><span id="text"></span></dt>
+            <dt><a id="Form" class="btn btn-lg" href="NewForm.html">Form</a></dt>
+            <dt><a id="1A" class="btn btn-info btn-lg" href="level1.html?sublevel=a">Level 1A</a></dt>
+            <dt><a id="1B" class="btn btn-info btn-lg" href="level1.html?sublevel=b">Level 1B</a></dt>
+            <dt><a id="1C" class="btn btn-info btn-lg" href="level1.html?sublevel=c">Level 1C</a></dt>
+            <dt><a class="btn btn-info btn-lg" disabled="disabled">Level 2 - TBA</a></dt>
+            <dt><a class="btn btn-info btn-lg" disabled="disabled">Level 2B - TBA</a></dt>
+            <dt><a class="btn btn-info btn-lg" disabled="disabled">Level 3 - TBA</a></dt>
         </dl>
 
     </div>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        if (!session.SessionExists()) {
+            $("#Form").addClass("btn-warning");
+            $("#1A").attr("disabled", "disabled");
+            $("#1B").attr("disabled", "disabled");
+            $("#1C").attr("disabled", "disabled");
+            $("#text").text("Please Fill in Form First");
+        }
+        else {
+            $("#Form").addClass("btn-success");
+        }
+    });
+
+</script>
