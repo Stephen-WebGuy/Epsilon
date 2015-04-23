@@ -1,4 +1,6 @@
-﻿/// <reference path="bootstrap.min.js" />
+﻿/// <reference path="../../intro-form.html" />
+/// <reference path="../../intro-form.html" />
+/// <reference path="bootstrap.min.js" />
 /// <reference path="jquery-ui.min.js" />
 /// <reference path="angular-dragdrop.min.js" />
 /// <reference path="angular.min.js" />
@@ -9,6 +11,41 @@
 
 var app = angular.module('epsilon', ['ngDragDrop']);
 var ImageOrder;
+var sound1 = new Audio("http://www.freesfx.co.uk/rx2/mp3s/3/4004_1329515672.mp3");
+
+var session = {
+    ID: '', //number
+    date: '',
+    child: {
+        ID: '', //number
+        age: ''
+    },
+    supervisor: {
+        ID: '' //number
+    },
+    levels: [ //array of levels
+        {
+            ID: '', //example '1', or '2', or '3'
+            sublevels: [ //array of sublevels
+                {
+                    name: '', //example 'A', or 'B', or 'C'
+                    start_time: '', //date
+                    end_time: '', //date
+                    success: false, //whether an image was dropped in a proper container or not.
+                    movements: [// array of movements
+                        {
+                            start_time: '', //when image dragged seconds after sublevel start_time
+                            end_time: '', //when image dropped seconds after sublevel start_time
+                            image_id: '', //number
+                            container_from: '', //number
+                            container_to: '', //number or null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
 
 app.run(function ($rootScope) {
     // Add / Change the root for shared objects;
@@ -19,6 +56,7 @@ app.run(function ($rootScope) {
         { ID: 2, name: "", src: "contents/images/image5.jpg" },
         { ID: 3, name: "", src: "contents/images/image6.jpg" }
     ];
+
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
@@ -102,11 +140,19 @@ app.controller("dragableImages", function ($scope, $rootScope, $filter) {
             // Success
             if ($scope.level.currentLevel != $scope.level.lastLevel) {
                 // Finsih Level but can increase in a sub level for level A
+                $("#theModal").modal('show');
+                //$("#audio1").play();
+                sound1.play();
                 gotToNextLevel($scope.level);
                 $scope.OrderImages(); // Affter increase in level re order the images in the array.
             } else {
                 // Finished all sub Levels for Level A
-                setTimeout(function () { alert("Finished Level A"); }, 0);
+                $("#modalContent").html("You Have finished level 1");
+                $("#theModal").modal('show');
+                $("#theModal").on('hidden.bs.modal', function () {
+                    window.location.href = "intro-form.html";
+                });
+                //setTimeout(function () { alert("Finished Level A"); }, 0);
             }
         }
     }
