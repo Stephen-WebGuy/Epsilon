@@ -23,7 +23,7 @@
             <h3>Session:</h3>
             <ul>
                 <li>ID: {{session.ID}}</li>
-                <li>Date: {{session.Date}}</li>
+                <li>Date: {{session.Date | date}}</li>
                 <li>Child ID: {{session.Child.ID}}</li>
                 <li>Child Age: {{session.Child.Date}}</li>
             </ul>
@@ -32,8 +32,8 @@
             <div ng-repeat="sublevel in level.SubLevels">
                 <h3>{{level.Name}} {{sublevel.Name}}</h3>
                 <ul>
-                    <li>Start Time: {{sublevel.StartTime}}</li>
-                    <li>End Time: {{sublevel.EndTime}}</li>
+                    <li>Start Time: {{sublevel.StartTime | date:'h:mm:ss a'}}</li>
+                    <li>End Time: {{sublevel.EndTime | date:'h:mm:ss a'}}</li>
                     <li>Success: <span ng-if="sublevel.Success">Yes</span> <span ng-if="!sublevel.Success">No</span></li>
                 </ul>
                 <table class="table table-bordered table-hover">
@@ -45,6 +45,7 @@
                             <th>To</th>
                             <th>Start</th>
                             <th>End</th>
+                            <th>Time Taken</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +54,9 @@
                             <td>{{movement.ImageID}}</td>
                             <td>{{movement.From}}</td>
                             <td>{{movement.Too}}</td>
-                            <td>{{movement.StartTime}}</td>
-                            <td>{{movement.EndTime}}</td>
+                            <td>{{movement.StartTime | date:'h:mm:ss:sss a'}}</td>
+                            <td>{{movement.EndTime | date:'h:mm:ss:sss a'}}</td>
+                            <td>{{TimeDiff(movement.StartTime,movement.EndTime)}} Milliseconds</td>
                         </tr>
                     </tbody>
                 </table>
