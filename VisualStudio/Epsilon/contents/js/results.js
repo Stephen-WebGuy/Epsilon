@@ -5,18 +5,17 @@
 /// <reference path="jquery-2.1.3.min.js" />
 /// <reference path="epsilon.js" />
 
-$(document).ready(function () {
-    
-});
-
 var app = angular.module('results', []);
+var theSession;
 
 app.run(function ($rootScope) {
-    //load json file here and put it to rootscope
-    session.load();
+    session.Load();
 });
 
 app.controller("mainController", function ($scope, $rootScope) {
-    $scope.theTest = session.Child.ID;
+    theSession = session.Session;
+    theSession.levels
+
+    $scope.session = theSession;
 });
 
