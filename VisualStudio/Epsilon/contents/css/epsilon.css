@@ -47,6 +47,19 @@ div, img {
     background-color: rgb(0,204,204);
 }
 
+#nav{
+
+    width: 100%;
+    text-align: center;
+    font-size: 37px;
+    font-family: cursive;
+    color: cornsilk;
+    hover: cornsilk;
+   
+}
+
+
+
 #mainContainer {
     margin-top: 50px;
 }
